@@ -1,0 +1,68 @@
+{
+  "name": "@jclem/get-in",
+  "version": "1.0.0",
+  "description": "A function for getting deeply nested values",
+  "author": "Jonathan Clem <jonathan@jclem.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jclem/get-in/issues"
+  },
+  "homepage": "https://github.com/jclem/get-in",
+  "main": "./dist/get-in.js",
+  "types": "./dist/get-in.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --check src/**/*",
+    "lint": "eslint src/**/*",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jclem/get-in"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
+    },
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+    "moduleFileExtensions": [
+      "js",
+      "ts"
+    ]
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "./tsconfig.json",
+      "tsconfigRootDir": "./",
+      "sourceType": "module"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "bracketSpacing": false,
+    "jsxBracketSameLine": true,
+    "arrowParens": "avoid",
+    "parser": "typescript"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.9",
+    "@typescript-eslint/parser": "^1.4.2",
+    "eslint": "^5.14.1",
+    "jest": "^24.1.0",
+    "prettier": "^1.16.4",
+    "ts-jest": "^24.0.0",
+    "ts-node": "^8.0.2",
+    "typescript": "^3.3.3333"
+  }
+}

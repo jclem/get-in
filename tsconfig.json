@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "umd",
+    "declaration": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "preserveConstEnums": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "rootDir": "./src",
+    "outDir": "./dist"
+  },
+  "exclude": [
+    "dist",
+    "node_modules",
+    "**/*.test.ts"
+  ]
+}
