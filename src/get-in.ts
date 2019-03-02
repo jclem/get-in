@@ -16,7 +16,7 @@ type ValueWrapper<T> = {value: T}
  * ```ts
  * type T = {a?: {b?: {c?: {d: string | null}}}}
  * const t: T = {}
- * const value = getIn(t).a.b.c.d // type: string | null, value: null
+ * const value = getIn(t).a.b.c.d.get() // type: string | null, value: null
  * ```
  */
 export function getIn<O>(obj: O, isEmpty: boolean = false): GetProxy<O> {
