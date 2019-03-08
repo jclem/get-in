@@ -57,6 +57,6 @@ action "Publish Test" {
 action "Publish" {
   uses = "actions/npm@master"
   needs = ["Publish Test"]
-  runs = "yarn publish"
   secrets = ["NPM_AUTH_TOKEN"]
+  args = "publish"
 }
