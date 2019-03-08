@@ -1,6 +1,6 @@
 {
   "name": "@jclem/get-in",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A function for getting deeply nested values",
   "author": "Jonathan Clem <jonathan@jclem.net>",
   "license": "MIT",

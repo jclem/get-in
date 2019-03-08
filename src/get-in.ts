@@ -1,14 +1,7 @@
-type GetProxyArr<V> = GetProxyObj<V>[] & {
-  get: () => NonNullable<V[]> | null
-}
-
-type GetProxyObj<V> = {[K in keyof Required<V>]: GetProxy<V[K]>} & {
-  get: () => NonNullable<V> | null
-}
-
+type CallableProxy<T> = {(): T | null}
+type GetProxyArr<V> = {[index: number]: GetProxyObj<V>} & CallableProxy<V[]>
+type GetProxyObj<V> = {[K in keyof Required<V>]: GetProxy<V[K]>} & CallableProxy<V>
 type GetProxy<V> = V extends (infer T)[] ? GetProxyArr<T> : GetProxyObj<V>
-
-type ValueWrapper<T> = {value: T}
 
 /**
  * Create a `GetProxy` from `obj`.
@@ -20,20 +13,10 @@ type ValueWrapper<T> = {value: T}
  * ```
  */
 export function getIn<O>(obj: O, isEmpty: boolean = false): GetProxy<O> {
-  if (obj.hasOwnProperty('get')) {
-    throw new Error(
-      'Can not create a getIn proxy for an object with a `get` key'
-    )
-  }
-
-  // We wrap each value, since `Proxy` must wrap an object.
-  return (new Proxy(wrap(obj), {
-    get<K extends keyof O>(target: ValueWrapper<O>, prop: K) {
-      const targetValue = unwrap(target)
-
-      if (prop === 'get') {
-        return () => (isEmpty ? null : targetValue)
-      }
+  // We wrap the value in a function so that we can use `Proxy.apply` to get it.
+  return (new Proxy(() => obj, {
+    get<K extends keyof O>(target: () => O, prop: K): GetProxy<{}> | GetProxy<O[K]> {
+      const targetValue = target()
 
       const value = targetValue[prop]
 
@@ -42,16 +25,12 @@ export function getIn<O>(obj: O, isEmpty: boolean = false): GetProxy<O> {
       }
 
       return getIn(value)
+    },
+
+    apply(target) {
+      return isEmpty ? null : target()
     }
   }) as unknown) as GetProxy<O>
-}
-
-function wrap<T>(value: T): ValueWrapper<T> {
-  return {value}
-}
-
-function unwrap<T>(wrapper: ValueWrapper<T>): T {
-  return wrapper.value
 }
 
 function nullProxy(): GetProxyObj<{}> {
