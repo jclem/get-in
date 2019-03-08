@@ -28,15 +28,13 @@ describe('get-in', () => {
       }
     }
 
-    const test = getIn(o).b.c.d.get()
+    const test = getIn(o).b.c.d()
     expect(test).toBeNull()
-    const test2 = getIn(o).b.f.get()
-    expect(test2).toBeNull()
-    const test3 = getIn(o).b.g.get()
+    const test2 = getIn(o).x[0]()
+    expect(test2).toEqual(1)
+    const test3 = getIn(o).b.g()
     expect(test3).toEqual('hello')
-    const test4 = getIn(o).b['h'][1].foo[0].get()
+    const test4 = getIn(o).b['h'][1].foo[0]()
     expect(test4).toEqual(2)
-    const test5 = getIn(o).x[0].get()
-    expect(test5).toEqual(1)
   })
 })
