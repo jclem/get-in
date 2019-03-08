@@ -1,6 +1,7 @@
 type CallableProxy<T> = {(): T | null}
 type GetProxyArr<V> = {[index: number]: GetProxyObj<V>} & CallableProxy<V[]>
-type GetProxyObj<V> = {[K in keyof Required<V>]: GetProxy<V[K]>} & CallableProxy<V>
+type GetProxyObj<V> = {[K in keyof Required<V>]: GetProxy<V[K]>} &
+  CallableProxy<V>
 type GetProxy<V> = V extends (infer T)[] ? GetProxyArr<T> : GetProxyObj<V>
 
 /**
@@ -15,7 +16,10 @@ type GetProxy<V> = V extends (infer T)[] ? GetProxyArr<T> : GetProxyObj<V>
 export function getIn<O>(obj: O, isEmpty: boolean = false): GetProxy<O> {
   // We wrap the value in a function so that we can use `Proxy.apply` to get it.
   return (new Proxy(() => obj, {
-    get<K extends keyof O>(target: () => O, prop: K): GetProxy<{}> | GetProxy<O[K]> {
+    get<K extends keyof O>(
+      target: () => O,
+      prop: K
+    ): GetProxy<{}> | GetProxy<O[K]> {
       const targetValue = target()
 
       const value = targetValue[prop]
