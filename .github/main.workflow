@@ -58,5 +58,5 @@ action "Publish" {
   uses = "actions/npm@master"
   needs = ["Publish Test"]
   secrets = ["NPM_AUTH_TOKEN"]
-  args = "publish"
+  args = "publish --access public"
 }
